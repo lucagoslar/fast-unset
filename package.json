@@ -1,0 +1,67 @@
+{
+	"name": "fast-unset",
+	"version": "0.1.0",
+	"description": "🪄 Efficiently remove, replace, set or default object properties.",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.js",
+	"files": [
+		"./dist/**/*",
+		"./types/**/*"
+	],
+	"scripts": {
+		"bench": "ts-node --project ./tsconfig.json ./src/benchmark/index",
+		"build": "rm -rf ./dist && tsc -p tsconfig.build.json",
+		"prepare": "husky install",
+		"test:watch": "jest --watch",
+		"test": "jest",
+		"lint": "eslint ./src/ --fix"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/lucagoslar/fast-unset.git"
+	},
+	"keywords": [
+		"fast",
+		"json",
+		"typescript",
+		"object",
+		"property",
+		"filter",
+		"key",
+		"set",
+		"delete",
+		"omit",
+		"redact",
+		"censor",
+		"default"
+	],
+	"author": "Luca Goslar <git@lucagoslar.de>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/lucagoslar/fast-unset/issues"
+	},
+	"homepage": "https://github.com/lucagoslar/fast-unset#readme",
+	"devDependencies": {
+		"@types/benchmark": "^2.1.1",
+		"@types/fast-redact": "^3.0.1",
+		"@types/jest": "^27.4.0",
+		"@types/node": "^17.0.8",
+		"@types/omit": "^1.0.0",
+		"@typescript-eslint/eslint-plugin": "^5.9.1",
+		"@typescript-eslint/parser": "^5.9.1",
+		"benchmark": "^2.1.4",
+		"eslint": "^8.6.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"fast-redact": "^3.0.2",
+		"husky": "^7.0.4",
+		"jest": "^27.4.7",
+		"jest-extended": "^1.2.0",
+		"prettier": "^2.5.1",
+		"ts-jest": "^27.1.2",
+		"ts-node": "^10.4.0",
+		"tsconfig-paths": "^3.12.0",
+		"typescript": "^4.5.4",
+		"unset-value": "^2.0.0"
+	}
+}
