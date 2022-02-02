@@ -4,8 +4,8 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference types="../types" />
-const bare_1 = require("@src/bare");
-const clone_1 = require("@src/clone");
+const bare_1 = require("./bare");
+const clone_1 = require("./clone");
 function funset(object, modifier, settings = {}) {
     if ((object.constructor !== Object && !Array.isArray(object)) ||
         (modifier.constructor !== Object && !Array.isArray(modifier)) ||

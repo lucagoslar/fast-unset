@@ -27,7 +27,8 @@ function bare(object, options) {
                 valueOpt.constructor === Object) {
                 // Check value and rules
                 const valueOfValueOpt = valueOpt.value;
-                const ruleOfValueOpt = valueOpt.rule;
+                const ruleOfValueOpt = valueOpt
+                    .rule;
                 const directOfValueOpt = valueOpt.direct === true;
                 const valueOfValueOptDefined = 'value' in valueOpt;
                 const ruleOfValueOptDefined = 'rule' in valueOpt;
