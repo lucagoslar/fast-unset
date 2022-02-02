@@ -32,10 +32,8 @@ export function bare(object: GenericArg, options: GenericArg): void {
 			) {
 				// Check value and rules
 				const valueOfValueOpt = (valueOpt as Record<string, unknown>).value;
-				const ruleOfValueOpt = (valueOpt as Record<string, unknown>).rule as Record<
-					string,
-					unknown
-				>;
+				const ruleOfValueOpt = (valueOpt as Record<string, unknown>)
+					.rule as Record<string, unknown>;
 				const directOfValueOpt =
 					(valueOpt as Record<string, unknown>).direct === true;
 
@@ -54,7 +52,10 @@ export function bare(object: GenericArg, options: GenericArg): void {
 					const valueOptKeysLength = valueOptKeys.length;
 
 					if (valueOptKeysLength === 1) {
-						bare(object[keyOpt] as GenericArg, valueOpt as Record<string, unknown>);
+						bare(
+							object[keyOpt] as GenericArg,
+							valueOpt as Record<string, unknown>
+						);
 					} else {
 						let valueOptKeysIndex: number;
 
@@ -73,7 +74,8 @@ export function bare(object: GenericArg, options: GenericArg): void {
 					}
 				} else {
 					const flagDeep = (valueOpt as Record<string, unknown>).deep === true; // Applies the rules in value to all nested objects for key
-					const flagDefault = (valueOpt as Record<string, unknown>).default === true; // Set value of key value if no value was set for key in object
+					const flagDefault =
+						(valueOpt as Record<string, unknown>).default === true; // Set value of key value if no value was set for key in object
 
 					// Check if key is to be set
 					if (
