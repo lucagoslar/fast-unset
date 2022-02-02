@@ -4,8 +4,8 @@
 
 /// <reference types="../types" />
 
-import { bare } from '@src/bare';
-import { clone } from '@src/clone';
+import { bare } from './bare';
+import { clone } from './clone';
 
 function funset(
 	object: Record<string, unknown> | Array<Record<string, unknown>>,
