@@ -31,4 +31,6 @@ function funset(
 	return ref;
 }
 
-export default funset;
+export default funset; // import syntax
+
+export { funset }; // require syntax
