@@ -1,6 +1,6 @@
 {
 	"name": "fast-unset",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "🪄 Efficiently remove, replace, set or default object properties.",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
