@@ -1,6 +1,6 @@
 {
 	"name": "fast-unset",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"description": "🪄 Efficiently remove, replace, set or default object properties.",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -10,7 +10,7 @@
 	],
 	"scripts": {
 		"bench": "ts-node --project ./tsconfig.json ./src/benchmark/index",
-		"build": "rm -rf ./dist && tsc -p tsconfig.build.json",
+		"build": "rm -rf ./dist && tsc -p tsconfig.build.json && resolve-tspaths",
 		"prepare": "husky install",
 		"test:watch": "jest --watch",
 		"test": "jest",
@@ -58,6 +58,7 @@
 		"jest": "^27.4.7",
 		"jest-extended": "^1.2.0",
 		"prettier": "^2.5.1",
+		"resolve-tspaths": "^0.2.3",
 		"ts-jest": "^27.1.2",
 		"ts-node": "^10.4.0",
 		"tsconfig-paths": "^3.12.0",
