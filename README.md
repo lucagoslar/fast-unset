@@ -4,12 +4,142 @@
 
 [![build package and run tests](https://github.com/lucagoslar/fast-unset/actions/workflows/main.yml/badge.svg)](https://github.com/lucagoslar/fast-unset/actions/workflows/main.yml)
 
-### Example
+### Index
 
-Find further examples at [/src/\_\_tests\_\_/](/src/__tests__/).
+- [fast-unset](#fast-unset)
+	- [Index](#index)
+- [Usage](#usage)
+	- [Deleting properties](#deleting-properties)
+	- [Setting values](#setting-values)
+	- [Modifiers](#modifiers)
+		- [rule](#rule)
+		- [value](#value)
+	- [Flags](#flags)
+		- [deep](#deep)
+		- [default](#default)
+		- [direct](#direct)
+	- [Working with arrays](#working-with-arrays)
+	- [Known limitattions](#known-limitattions)
+- [Example](#example)
+- [Benchmarking](#benchmarking)
+- [Tests](#tests)
+- [API Reference](#api-reference)
+- [Contribute](#contribute)
+	- [Getting started](#getting-started)
+
+## Usage
+
+_Generally speaking_ - mimic the structure of the object to be mutated.
+
+To [remove a property](#deleting-properties), set its value to null or pass an object containing the property `rule` set to null. \
+To [set a property](#setting-values), pass it an object containing a `value` property set to your desired value.
+
+### Deleting properties
+
+```js
+funset(object, { prop: { nestedprop: null } }); // Short for …
+funset(object, {
+	prop: { rule: { nestedprop: { rule: null } } },
+});
+```
+
+### Setting values
+
+```js
+funset(object, {
+	prop: { value: new Date() },
+});
+```
+
+### Modifiers
+
+#### rule
+
+`rule` accepts either an array of objects, an object or `null`. \
+When passing `null`, the property will get removed. Otherwise, the object or the array passed will get treated as a path to an object.
+
+#### value
+
+`value` holds what will get set to the property.
+
+### Flags
+
+The value of a property may contain flags, such as `deep` or `default`, and the available modifies `rule` and `value`.
+
+#### deep
+
+Applies your rule globally while only looking into the object of the property it got defined in.
+
+_Example:_
+
+```js
+funset(object, { prop: { deep: true, rule: null } });
+```
+
+**The passed object** will get searched for occurrences of property `prop`. Findings will get removed - nested ones included. \
+The `deep` flag may get used in combination with the `default` flag.
+
+#### default
+
+Only sets the value if the property did not occur at the position of your property.
+
+```js
+funset(object, { prop: { default: true, value: null } });
+```
+
+#### direct
+
+Treats the values of your property as if they were in a `rule` modifier.
+
+Passing the `direct` flag **will only be neccessary** in the case of a nested property called `value` or `rule`. Otherwise, it is not required.
+
+```js
+funset(object, { prop: { direct: true, value: null } });
+```
+
+The property `value` of `prop` will get removed.
+
+The same behaviour can get achieved with the following.
+
+```js
+funset(object, { prop: { rule: { value: null } } });
+```
+
+### Working with arrays
+
+```js
+let object = { value: [[{ prop: 1 }]] };
+
+funset(object, { value: { rule: { prop: null } } });
+```
+
+As seen in this example, brackets must not necessarily get set.
+
+### Known limitattions
+
+You cannot access the properties "direct" and "value" or "rule" in combination if nested. Alternatively, wrap them in a `rule` modifier.
+
+_Example:_
+
+```js
+funset(
+	{ value: 1, rule: 1, direct: 1 }, // Object
+	{ value: null, rule: null, direct: null } // Modifier
+); // No action required
+
+funset(
+	{ prop: { value: 1, rule: 1, direct: 1 } }, // Object
+	{ prop: { rule: { value: null, rule: null, direct: null } } } // Modifier
+); // See the modifier "rule" containing another set of modifiers
+```
+
+## Example
+
+Find further examples at [/src/\_\_tests\_\_/](/src/__tests__/) or jump to section [Usage](#usage).
 
 ```js
 import funset from 'fast-unset';
+// const funset = require('fast-unset');
 
 let object = {
 	secret: 'shhh',
@@ -47,11 +177,11 @@ let mofifier = {
 	// 		{ pin: { value: null } },
 	// 		{ nested: { rule: { anothersecret: { rule: null } } } },
 	// 	],
-	// }, //! Also valid syntax, though not recommended due to performance impact
+	// }, //! Also valid, though not recommended due to performance impact
 };
 let settings = {
 	clone: false, // Instead, working on a deep clone of the object
-}; // Optional
+}; // Optional though
 
 funset(object, mofifier, settings);
 
@@ -77,111 +207,9 @@ console.log(object);
 */
 ```
 
-### Usage
-
-_Generally speaking_ - mimic the structure of the object to be mutated.
-\
-To remove a property, you can set its value to null. You can also set the property to an object that contains another property called `rule` valuing null.
-To set a value, pass the property an object that contains a `value` property.
-
-#### Behaviour
-
-A property may contain flags, such as `deep` or `default`, and the available modifies `rule` and `value`.
-
-#### Flags
-
-##### `deep`
-
-The `deep` flag applies the passed value of the property globally.
-
-Example:
-
-```js
-funset(object, { prop: { deep: true, rule: null } });
-```
-
-The passed object will get searched for occurrences of the property `prop`. Findings will be removed - including nested ones. If specified, you can also set values. \
-The `deep` flag may get used in combination with the `default` flag.
-
----
-
-##### `default`
-
-```js
-funset(object, { prop: { default: true, value: null } });
-```
-
-The property `value` of the property `prop` will only get set if the object passed does not contain `prop`.
-
----
-
-##### `direct`
-
-```js
-funset(object, { prop: { direct: true, value: null } });
-```
-
-The property `value` of `prop` will get removed. \
-Note that this flag is only required if either of the properties `value` and `rule` are present in the object.
-
-The equivalent, not using the flag `direct` would be the following.
-Using the `rule` modifier will be slower and more challenging to read in a complex environment.
-
-```js
-funset(object, { prop: { rule: { value: null } } });
-```
-
----
-
-#### Deleting properties
-
-```js
-funset(object, { prop: { nestedprop: null } }); // Short for …
-funset(object, {
-	prop: { rule: { nestedprop: { rule: null } } },
-});
-```
-
-#### Setting values
-
-```js
-funset(object, {
-	prop: { value: new Date() },
-});
-```
-
-#### Known limitattions
-
-You cannot access the properties "direct" and "value" or "rule" in combination if nested. Alternatively, you can place these in the `rule` flag.
-
-##### Such special cases
-
-```js
-funset(
-	{ value: 1, rule: 1, direct: 1 }, // Object
-	{ value: null, rule: null, direct: null } // Modifier
-); // No action required
-
-funset(
-	{ prop: { value: 1, rule: 1, direct: 1 } }, // Object
-	{ prop: { rule: { value: null, rule: null, direct: null } } } // Modifier
-); // See the flag "rule" containing another filter
-```
-
-##### Special case: array
-
-```js
-funset(
-	{ value: [[{ prop: 1 }]] }, // Object
-	{ value: { rule: { prop: null } } } // Modifier
-);
-```
-
-As seen in this example, brackets must not be set but are helpful if you want to split up rules for better readability.
-
 ## [Benchmarking](/src/benchmark/index.ts)
 
-**Note** that results may differ on different devices and runs.
+⚠️ **Note** that results may differ on different devices, runs and use cases.
 
 | library           | deep clone | result                   | runs sampled | performance |
 | :---------------- | :--------: | :----------------------- | :----------- | :---------- |
