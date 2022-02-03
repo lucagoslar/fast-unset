@@ -1,7 +1,4 @@
 "use strict";
-/*
- * Note: Tests can be found at src/__tests__/clone.spec.ts.
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.clone = void 0;
 function clone(value) {
@@ -33,7 +30,6 @@ function clone(value) {
         return new Date(value.getTime());
     }
     else if (value && typeof value === 'object') {
-        // Case of Date, RegExp, etc.
         return value.constructor(JSON.parse(JSON.stringify(value)));
     }
     else
