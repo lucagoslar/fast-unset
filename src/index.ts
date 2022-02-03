@@ -4,8 +4,8 @@
 
 /// <reference types="../types" />
 
-import { bare } from './bare';
-import { clone } from './clone';
+import { bare } from '@src/bare';
+import { clone } from '@src/clone';
 
 function funset(
 	object: Record<string, unknown> | Array<Record<string, unknown>>,
@@ -17,7 +17,9 @@ function funset(
 		(modifier.constructor !== Object && !Array.isArray(modifier)) ||
 		settings.constructor !== Object
 	) {
-		throw new TypeError('All passed arguments may only be of type "Object".');
+		throw new TypeError(
+			'All passed arguments may only be of type object or type array of objects. Argument "settings" may only be of type object.'
+		);
 	}
 
 	let ref = object;
