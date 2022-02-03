@@ -33,4 +33,4 @@ function funset(
 
 export default funset; // import syntax
 
-export { funset }; // require syntax
+module.exports = funset; // require syntax

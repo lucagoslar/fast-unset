@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.funset = void 0;
 const bare_1 = require("./bare");
 const clone_1 = require("./clone");
 function funset(object, modifier, settings = {}) {
@@ -16,6 +15,6 @@ function funset(object, modifier, settings = {}) {
     (0, bare_1.bare)(ref, modifier);
     return ref;
 }
-exports.funset = funset;
 exports.default = funset;
+module.exports = funset;
 //# sourceMappingURL=index.js.map
