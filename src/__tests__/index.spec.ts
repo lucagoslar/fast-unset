@@ -55,6 +55,18 @@ describe('removing properties', () => {
 
 		expect(object).toEqual({ age: [{}] });
 	});
+
+	test('remove property "age" of property "age"', () => {
+		const object = {
+			age: {
+				age: 'X',
+			},
+		};
+
+		funset(object, { age: { rule: [{ age: null }] } });
+
+		expect(object).toEqual({ age: {} });
+	});
 });
 
 describe('sets property', () => {
@@ -383,5 +395,75 @@ describe('equalling property key and modifier key', () => {
 		});
 
 		expect(object).toEqual({});
+	});
+});
+
+describe('unknown input object structure', () => {
+	test('removes property "prop" of property "prop"', () => {
+		const object = {};
+
+		funset(object, { prop: { prop: null } });
+
+		expect(object).toEqual({});
+	});
+
+	test('sets property "prop" at property "prop"', () => {
+		const object = {};
+
+		funset(object, { prop: { prop: { value: null } } });
+
+		expect(object).toEqual({ prop: { prop: null } });
+	});
+
+	test('sets property "prop" at property "prop" with a rule', () => {
+		const object = {};
+
+		funset(object, { prop: { rule: { prop: { value: null } } } });
+
+		expect(object).toEqual({ prop: { prop: null } });
+	});
+
+	test('sets property "prop" at property "prop" with an array of rules', () => {
+		const object = {};
+
+		funset(object, { prop: { rule: [{ prop: { value: null } }] } });
+
+		expect(object).toEqual({ prop: { prop: null } });
+	});
+
+	test('sets property "prop" at property "prop" with the "direct" flag', () => {
+		const object = {};
+
+		funset(object, { prop: { direct: true, value: { value: null } } });
+
+		expect(object).toEqual({ prop: { value: null } });
+	});
+
+	test('sets property "rule" at property "prop" with the "direct" flag', () => {
+		const object = {};
+
+		funset(object, { prop: { direct: true, rule: { value: null } } });
+
+		expect(object).toEqual({ prop: { rule: null } });
+	});
+
+	test('sets property "rule" at property "prop" with the and "default" flag', () => {
+		const object = {};
+
+		funset(object, {
+			prop: { prop: { default: true, value: null } },
+		});
+
+		expect(object).toEqual({ prop: { prop: null } });
+	});
+
+	test('sets property "rule" at property "prop" with the "direct" and "default" flag', () => {
+		const object = {};
+
+		funset(object, {
+			prop: { default: true, direct: true, rule: { value: null } },
+		});
+
+		expect(object).toEqual({ prop: { rule: null } });
 	});
 });
