@@ -1,3 +1,7 @@
+## 📎 Note
+
+Version 2.0.0 contains a bug fix. Therefore, please update to the latest version.
+
 ## fast-unset
 
 🪄 Efficiently remove, replace, set or default object properties.
@@ -6,26 +10,28 @@
 
 ### Index
 
+- [Note](#)
 - [fast-unset](#fast-unset)
-	- [Index](#index)
+  - [Index](#index)
 - [Usage](#usage)
-	- [Deleting properties](#deleting-properties)
-	- [Setting values](#setting-values)
-	- [Modifiers](#modifiers)
-		- [rule](#rule)
-		- [value](#value)
-	- [Flags](#flags)
-		- [deep](#deep)
-		- [default](#default)
-		- [direct](#direct)
-	- [Working with arrays](#working-with-arrays)
-	- [Known limitattions](#known-limitattions)
+  - [Deleting properties](#deleting-properties)
+  - [Setting values](#setting-values)
+  - [Modifiers](#modifiers)
+    - [rule](#rule)
+    - [value](#value)
+  - [Flags](#flags)
+    - [deep](#deep)
+    - [default](#default)
+    - [direct](#direct)
+  - [Working with arrays](#working-with-arrays)
+  - [Known limitattions](#known-limitattions)
 - [Example](#example)
 - [Benchmarking](#benchmarking)
 - [Tests](#tests)
+- [Treeshaking](#treeshaking)
 - [API Reference](#api-reference)
 - [Contribute](#contribute)
-	- [Getting started](#getting-started)
+  - [Getting started](#getting-started)
 
 ## Usage
 
@@ -209,19 +215,26 @@ console.log(object);
 
 ## [Benchmarking](/src/benchmark/index.ts)
 
-⚠️ **Note** that results may differ on different devices, runs and use cases.
+⚠️ **Note** that results may differ on different devices, runs and use cases. Also, when bundling packages, bundle sizes depend on the configuration you use.
 
-| library           | deep clone | result                   | runs sampled | performance |
-| :---------------- | :--------: | :----------------------- | :----------- | :---------- |
-| fast-redact       |   false    | 983,100 ops/sec ±0.59%   | 94           | 20,4%       |
-| unset-value       |   false    | 2,242,176 ops/sec ±0.46% | 98           | 46,6%       |
-| fast-unset        |    true    | 2,456,323 ops/sec ±0.41% | 95           | 51%         |
-| fast-unset        |   false    | 4,771,697 ops/sec ±0.45% | 94           | 99,2%       |
-| fast-unset (bare) |   false    | 4,812,490 ops/sec ±0.50% | 92           | 100%        |
+| library           | deep clone | result                   | runs sampled | performance | bundle size (min + gz) |
+| :---------------- | :--------: | :----------------------- | :----------- | :---------- | :--------------------- |
+| fast-redact       |   false    | 896,643 ops/sec ±0.52%   | 96           | 22.4%       | -                      |
+| unset-value       |   false    | 2,017,302 ops/sec ±0.46% | 94           | 47.3%       | 1.8 kB                 |
+| fast-unset        |    true    | 2,170,838 ops/sec ±0.57% | 96           | 52.2%       | 1.3 kB                 |
+| fast-unset        |   false    | 4,202,390 ops/sec ±0.46% | 93           | 98.8%       | 1.3 kB                 |
+| fast-unset (core) |   false    | 4,264,643 ops/sec ±0.44% | 94           | 100%        | 600 B                  |
 
 ## [Tests](/src/__tests__/)
 
 The [tests](/src/__tests__/) provided may not cover all edge cases. Feel free to suggest new ones or report missing ones.
+
+## Treeshaking
+
+```js
+import { core } from 'fast-unset/core';
+// Same usage as funset while dropping argument `settings` and all argument type checking
+```
 
 ## API Reference
 
@@ -229,12 +242,12 @@ The [tests](/src/__tests__/) provided may not cover all edge cases. Feel free to
 import funset from 'fast-unset';
 // const funset = require("fast-unset");
 
-funset(object, modifier, settings) => Object
+funset(input, modifier, settings) => Object
 ```
 
 The function provided is constrained to the following arguments while always returning an object or throwing errors:
 
-- `object`
+- `input`
   - required
   - type: object or an array of objects
 - `modifier`
