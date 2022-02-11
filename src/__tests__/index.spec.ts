@@ -466,4 +466,46 @@ describe('unknown input object structure', () => {
 
 		expect(object).toEqual({ prop: { rule: null } });
 	});
+
+	test('returns an empty object', () => {
+		const object = {};
+
+		funset(object, {
+			prop: {
+				prop: {
+					prop: { prop: null, prop2: null },
+					prop2: { prop3: { prop4: null } },
+				},
+			},
+		});
+
+		expect(object).toEqual({});
+	});
+
+	test('sets deeply nested properties "prop" and "prop5"', () => {
+		const object = {};
+
+		funset(object, {
+			prop: {
+				prop: {
+					prop: { prop: { value: null }, prop2: null },
+					prop2: { prop3: { prop4: null, prop5: { value: null } } },
+				},
+			},
+		});
+
+		expect(object).toEqual({
+			prop: {
+				prop: { prop2: { prop3: { prop5: null } }, prop: { prop: null } },
+			},
+		});
+	});
+
+	test('does absolutely nothing', () => {
+		const object = {};
+
+		funset(object, {});
+
+		expect(object).toEqual({});
+	});
 });
