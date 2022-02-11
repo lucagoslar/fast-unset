@@ -7,10 +7,11 @@ export function clone(value: unknown): unknown {
 		const tmp = [];
 
 		const value_length = value.length;
-		let value_index;
+		let value_index = 0;
 
-		for (value_index = 0; value_index < value_length; value_index++) {
+		while (value_index < value_length) {
 			tmp.push(clone(value[value_index]));
+			value_index++;
 		}
 
 		return tmp;
@@ -25,12 +26,13 @@ export function clone(value: unknown): unknown {
 
 		const value_keys = Object.keys(value);
 		const value_length = value_keys.length;
-		let value_index;
+		let value_index = 0;
 
-		for (value_index = 0; value_index < value_length; value_index++) {
+		while (value_index < value_length) {
 			tmp[value_keys[value_index]] = clone(
 				(value as Record<string, unknown>)[value_keys[value_index]]
 			);
+			value_index++;
 		}
 
 		return tmp;
