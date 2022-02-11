@@ -5,7 +5,7 @@
 import Benchmark from 'benchmark';
 
 import funset from '@src/index';
-import { bare } from '@src/bare';
+import { core } from '@src/core';
 
 import unset from 'unset-value';
 import fastRedact from 'fast-redact';
@@ -87,7 +87,7 @@ suite
 			},
 		};
 
-		bare(object, {
+		core(object, {
 			a: { b: { c: null } },
 		});
 
