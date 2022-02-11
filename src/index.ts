@@ -4,14 +4,14 @@
 
 /// <reference types="../types" />
 
-import { bare } from '@src/bare';
+import { core } from '@src/core';
 import { clone } from '@src/clone';
 
 function funset(
-	object: Record<string, unknown> | Array<Record<string, unknown>>,
-	modifier: Record<string, unknown> | Array<Record<string, unknown>>,
+	object: Input,
+	modifier: Modifier,
 	settings: Settings = {}
-): Partial<typeof object> & Partial<typeof modifier> {
+): Output {
 	if (
 		(object.constructor !== Object && !Array.isArray(object)) ||
 		(modifier.constructor !== Object && !Array.isArray(modifier)) ||
@@ -28,7 +28,7 @@ function funset(
 		ref = clone(object) as typeof object;
 	}
 
-	bare(ref, modifier);
+	core(ref, modifier);
 
 	return ref;
 }
