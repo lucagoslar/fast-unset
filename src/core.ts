@@ -8,7 +8,7 @@ export function core(input: Input, modifier: Modifier): Output {
 	// Check if modifier is Array
 	else if (Array.isArray(input)) destructureInputArray(input, modifier);
 	// Otherwise proceed as usual (Only inputs are supposed to get passed)
-	else {
+	else if (input) {
 		const modifierKeys = Object.keys(modifier);
 		const modifierKeysLength = modifierKeys.length;
 		let modifierKeysIndex = 0;
@@ -34,12 +34,14 @@ export function core(input: Input, modifier: Modifier): Output {
 				const valueOfValueOptDefined = 'value' in valueOpt;
 				const ruleOfValueOptDefined = 'rule' in valueOpt;
 
-				// Check if
+				// Check if input contains property
 				if (!input[keyOpt]) {
 					const tmp: Record<string, unknown> = {};
 					tmp[keyOpt] = valueOpt;
 					const res = resolver(tmp);
-					if (res) input[keyOpt] = res[keyOpt];
+					if (res && res[keyOpt]) {
+						input[keyOpt] = res[keyOpt];
+					}
 				}
 
 				// Catch a direct path to a value
@@ -78,11 +80,7 @@ export function core(input: Input, modifier: Modifier): Output {
 						input[keyOpt] = valueOfValueOpt;
 					}
 					// Check if one should remove key
-					else if (
-						ruleOfValueOpt === null &&
-						!valueOfValueOptDefined &&
-						input
-					) {
+					else if (ruleOfValueOpt === null && !valueOfValueOptDefined) {
 						delete input[keyOpt];
 					}
 					// Check for a nested rule
@@ -106,7 +104,7 @@ export function core(input: Input, modifier: Modifier): Output {
 					}
 				}
 				// * End of processing input
-			} else if (valueOpt === null && input) {
+			} else if (valueOpt === null) {
 				// Remove key if it was just set to null
 				delete input[keyOpt];
 			}
