@@ -219,11 +219,11 @@ console.log(object);
 
 | library           | deep clone | result                   | runs sampled | performance | bundle size (min + gz) |
 | :---------------- | :--------: | :----------------------- | :----------- | :---------- | :--------------------- |
-| fast-redact       |   false    | 896,643 ops/sec ±0.52%   | 96           | 22.4%       | -                      |
-| unset-value       |   false    | 2,017,302 ops/sec ±0.46% | 94           | 47.3%       | 1.8 kB                 |
-| fast-unset        |    true    | 2,170,838 ops/sec ±0.57% | 96           | 52.2%       | 1.3 kB                 |
-| fast-unset        |   false    | 4,202,390 ops/sec ±0.46% | 93           | 98.8%       | 1.3 kB                 |
-| fast-unset (core) |   false    | 4,264,643 ops/sec ±0.44% | 94           | 100%        | 600 B                  |
+| fast-redact       |   false    | 981,388 ops/sec ±0.57%   | 93           | 21.9%       | -                      |
+| unset-value       |   false    | 2,252,566 ops/sec ±0.49% | 95           | 50.2%       | 1.8 kB                 |
+| fast-unset        |    true    | 2,300,278 ops/sec ±0.49% | 96           | 51.3%       | 1.3 kB                 |
+| fast-unset        |   false    | 4,451,021 ops/sec ±0.46% | 95           | 99.3%       | 1.3 kB                 |
+| fast-unset (core) |   false    | 4,484,568 ops/sec ±0.40% | 92           | 100%        | 600 B                  |
 
 ## [Tests](/src/__tests__/)
 
