@@ -232,7 +232,7 @@ The [tests](/src/__tests__/) provided may not cover all edge cases. Feel free to
 ## Treeshaking
 
 ```js
-import { core } from 'fast-unset/core';
+import { core } from 'fast-unset/dist/core';
 // Same usage as funset while dropping argument `settings` and all argument type checking
 ```
 
