@@ -36,7 +36,7 @@ export function clone(value: unknown): unknown {
 		}
 
 		return tmp;
-	} else if ((value as Date).constructor === Date) {
+	} else if (value && (value as Date).constructor === Date) {
 		return new Date((value as Date).getTime());
 	} else if (value && typeof value === 'object') {
 		// Case of Date, RegExp, etc.

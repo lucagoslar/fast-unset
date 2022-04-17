@@ -15,9 +15,9 @@ describe('cloned object equals original object', () => {
 	});
 
 	test('cloned object does not mutate', () => {
-		const object = {
+		const object: any = {
 			name: {
-				forename: 'X',
+				forename: undefined,
 				surname: 'Y',
 			},
 			age: 30,
